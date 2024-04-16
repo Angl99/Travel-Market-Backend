@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int     @id @default(autoincrement())
+  username    String  @unique
+  email       String  @unique
+  profile_url String
+  Vendor      Vendor?
+  firebase_id String  @unique
+}
+
+model Vendor {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @unique
+  shopName  String    @unique
+  user      User      @relation(fields: [userId], references: [id])
+  locale_id Int
+  locale    Locale    @relation(fields: [locale_id], references: [id])
+  products  Product[]
+}
+
+model Product {
+  id          Int     @id @default(autoincrement())
+  vendorId    Int
+  name        String
+  description String
+  price       Int
+  image       String?
+  // Add more product fields like category, availability etc.
+  vendor      Vendor  @relation(fields: [vendorId], references: [id])
+}
+
+model Locale {
+  id         Int      @id @default(autoincrement())
+  name       String
+  short_name String
+  Vendor     Vendor[]
+}
