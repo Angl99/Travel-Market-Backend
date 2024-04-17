@@ -1,4 +1,4 @@
-const app = require('./index.js');
+import app from './index.js'
 
 const PORT = 3015;
 
