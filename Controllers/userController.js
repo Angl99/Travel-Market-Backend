@@ -17,19 +17,21 @@ const index = async (req, res) => {
 }
 
 const create = async (req, res) => {
-    const created_at = new Date().toISOString();
+    // const created_at = new Date().toISOString();
     const {
         username,
         email,
         profile_url,
+        firebase_id
     } = req.body;
     try {
         const newUser = await prisma.user.create({
             data: {
-                created_at,
+                // created_at,
                 username,
                 email,
                 profile_url,
+                firebase_id
             }
         })
         res.status(201).json(newUser)
