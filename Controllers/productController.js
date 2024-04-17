@@ -3,12 +3,12 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const createProduct = async (req, res) => {
-  const { id, vendor, name, description, price, image } = req.body;
+  const { vendorId, name, description, price, image } = req.body;
   try {
     const product = await prisma.product.create({
       data: {
-        id: id,
-        vendorId: { connect: { id: parseInt(vendorId) } },
+        
+        vendor: { connect: { id: parseInt(vendorId) } },
         name: name,
         description: description,
         price: price,
@@ -23,11 +23,11 @@ const createProduct = async (req, res) => {
 };
 
 const getSingleProduct = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   try {
     const singleProduct = await prisma.product.findUnique({
       where: {
-        id: id,
+        id: parseInt(id),
       },
     });
     res.status(200).json(singleProduct);
@@ -49,15 +49,16 @@ const getAllProducts = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { name, description, price, image } = req.body;
+  const { vendorId, name, description, price, image } = req.body;
 
   try {
     const updProduct = await prisma.product.update({
       where: {
-        vendor: { connect: { id: parseInt(vendorId) } }
+        id: parseInt(id)
       },
 
       data: {
+        vendor: { connect: { id: parseInt(vendorId) } },
         name: name,
         description: description,
         price: price,
@@ -81,7 +82,7 @@ const deleteProduct = async (req, res) => {
   try {
     const deletedProduct = await prisma.product.delete({
       where: {
-        vendor: { connect: { id: parseInt(vendorId) } },
+        id: parseInt(id)
       },
     });
     res.status(200).json(deletedProduct);
