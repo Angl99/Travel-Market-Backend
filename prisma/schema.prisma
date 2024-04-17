@@ -29,7 +29,7 @@ model Vendor {
   user      User      @relation(fields: [userId], references: [id])
   locale_id Int
   locale    Locale    @relation(fields: [locale_id], references: [id])
-  products  Product[]
+  products  Product[] //should be relational
 }
 
 model Product {
