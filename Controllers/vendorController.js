@@ -1,10 +1,10 @@
-const { PrismaClient } = require('@prisma/client')
+import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient();
 //see all vendors
 
-const VendorController = {
-    getAllVendors: async (req, res) => {
+
+    const getAllVendors = async (req, res) => {
       try {
         const vendors = await prisma.vendor.findMany({
           include: {
@@ -17,10 +17,10 @@ const VendorController = {
         console.error(error);
         res.status(500).json({ message: 'Error fetching vendors' });
       }
-    },
-  };
+    }
+ 
   
-  module.exports = { getAllVendors };
+ export { getAllVendors };
 
 
 //see vendors by id
