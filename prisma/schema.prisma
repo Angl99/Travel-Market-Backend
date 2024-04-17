@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  create_at   DateTime @default(now())
+  created_at   DateTime @default(now())
   id          Int      @id @default(autoincrement())
   username    String   @unique
   email       String   @unique
