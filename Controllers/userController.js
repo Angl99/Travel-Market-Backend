@@ -17,7 +17,7 @@ const index = async (req, res) => {
 }
 
 const create = async (req, res) => {
-    // const created_at = new Date().toISOString();
+    const created_at = new Date().toISOString();
     const {
         username,
         email,
@@ -27,7 +27,7 @@ const create = async (req, res) => {
     try {
         const newUser = await prisma.user.create({
             data: {
-                // created_at,
+                created_at,
                 username,
                 email,
                 profile_url,

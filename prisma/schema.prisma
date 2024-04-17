@@ -14,12 +14,13 @@ datasource db {
 }
 
 model User {
-  id          Int     @id @default(autoincrement())
-  username    String  @unique
-  email       String  @unique
+  create_at   DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  username    String   @unique
+  email       String   @unique
   profile_url String
   Vendor      Vendor?
-  firebase_id String  @unique
+  firebase_id String   @unique
 }
 
 model Vendor {
