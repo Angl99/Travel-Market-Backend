@@ -93,8 +93,21 @@ const updateVendorById = async (req, res) => {
       res.status(500).json({ message: 'Error updating vendor' });
     }
   };
-  
-//delete vendor by id
 
+//delete vendor by id
+const deleteVendorById = async (req, res) => {
+  const vendorId = parseInt(req.params.id); // Extract vendor ID from URL params
+
+  try {
+    const deletedVendor = await prisma.vendor.delete({ where: { id: vendorId } });
+    if (!deletedVendor) {
+      return res.status(404).json({ message: 'Vendor not found' });
+    }
+    res.json({ message: 'Vendor deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error deleting vendor' });
+  }
+};
 
 export { getAllVendors, createVendor, getVendorById, updateVendorById   };
